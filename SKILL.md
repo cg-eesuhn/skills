@@ -18,9 +18,11 @@ You have access to the CoinGecko API (aggregated data) and the GeckoTerminal API
 
 ## Before anything else
 
-Always read `references/core.md` first. It contains the methodology for choosing between
-CoinGecko and GeckoTerminal, authentication setup, and rate limit guidance — all of which
-affect how every request should be made.
+1. **Ask the user for their plan and API key** before writing any code or calling any endpoint.
+   The correct base URL and auth header depend on whether they have a paid (Pro) or free (Demo)
+   plan — you cannot tell from the key alone. See `references/core.md` for details.
+2. Read `references/core.md` — it covers methodology, authentication, and rate limits that apply
+   to every request.
 
 ## Reference index
 

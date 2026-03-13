@@ -85,15 +85,42 @@ same base URL, e.g. `https://pro-api.coingecko.com/api/v3/onchain/...`
 
 ### Determining the user's plan
 
-At the start of a session, ask the user whether they are on a paid plan. If yes:
-- Remember this for the rest of the conversation
-- Use `https://pro-api.coingecko.com/api/v3` as the base URL
-- Ask for their API key if they haven't provided it yet
+**Before writing any code or making any API calls, ask the user two things:**
+1. Are they on a paid (Pro) plan or a free (Demo) plan?
+2. What is their API key?
 
-If the user is not on a paid plan, use the Demo base URL with a Demo key. If they refuse
-to provide any key, fall back to keyless access (omit auth entirely).
+This matters because the base URL and auth header are different for each plan — you cannot
+infer the plan from the key itself. Both Demo and Pro API keys start with `CG-`; the only
+way to know which plan the user is on is to ask.
 
-API keys can be retrieved from: https://www.coingecko.com/en/developers/dashboard
+Once you know their plan, hard-code that tier's config — do not write branching logic that
+tries to auto-detect the plan from the key. The generated code should read the plan as a
+given and configure the base URL and header directly:
+
+**Paid (Pro) — use this when the user confirmed they are on a paid plan:**
+```python
+BASE_URL = "https://pro-api.coingecko.com/api/v3"
+headers = {"x-cg-pro-api-key": API_KEY}
+```
+
+**Demo (free with key) — use this when the user confirmed they are on a free/Demo plan:**
+```python
+BASE_URL = "https://api.coingecko.com/api/v3"
+headers = {"x-cg-demo-api-key": API_KEY}
+```
+
+**Keyless — only if the user explicitly refuses to provide any key:**
+```python
+BASE_URL = "https://api.coingecko.com/api/v3"
+headers = {}
+```
+
+Never write code that infers the plan tier from the key value (e.g. checking if it starts
+with "CG-" or any other prefix). The user told you their plan — trust that and configure
+accordingly.
+
+If the user has no key, they can get one at https://www.coingecko.com/en/api/pricing
+(free Demo account or paid Pro subscription).
 
 ---
 
