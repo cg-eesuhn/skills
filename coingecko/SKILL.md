@@ -42,8 +42,8 @@ load the file(s) that match the current request.
 | `references/derivatives.md` | Derivatives exchanges and tickers |
 | `references/treasury.md` | Public company/institution crypto treasury holdings |
 | `references/nfts.md` | NFT collection data, market data, charts |
-| `references/global.md` | Global market stats, DeFi data, trending, exchange rates, search |
-| `references/utils.md` | API status ping, API key usage, supported currencies |
+| `references/global.md` | Global market stats and DeFi data |
+| `references/utils.md` | API status, API key usage, supported currencies, search, trending, exchange rates |
 
 ### GeckoTerminal (on-chain)
 
